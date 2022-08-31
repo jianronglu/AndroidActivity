@@ -9,4 +9,9 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d("BaseActivity", javaClass.simpleName)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        //ActivityCollector.removeActivity(this)
+    }
 }
