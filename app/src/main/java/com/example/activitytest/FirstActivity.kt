@@ -8,7 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 
-class FirstActivity : AppCompatActivity() {
+class FirstActivity : BaseActivity() {
     private val tag = "FirstActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
