@@ -3,6 +3,7 @@ package com.example.activitytest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
@@ -31,6 +32,22 @@ class FirstActivity : AppCompatActivity() {
             val intent = Intent(this, DialogActivity::class.java)
             startActivity(intent)
         }
+        // 数据恢复被回收的数据
+        if (savedInstanceState != null) {
+            val tempData = savedInstanceState.getString("data_key")
+            Log.d(tag, "tempData is $tempData")
+        }
+    }
+    /**
+     *  不在栈顶Activity有可能被回收，重新回栈顶会直接走onCreate(正常情况下应该走onRestart)
+     *  此时临时数据可能丢失
+     *  这个方法可以保证在Activity被回收之前一定会被调用，因此我们可以通过这个方法来解决问题。
+     *  屏幕发生旋转的时候，Activity也会经历一个重新创建的过程，也可以用该方法
+     */
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        val  tempData = "Something you just typed"
+        outState.putString("data_key", tempData)//数据保存了
     }
 
     override fun onStart() {
