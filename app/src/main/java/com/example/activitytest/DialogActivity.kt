@@ -1,5 +1,6 @@
 package com.example.activitytest
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +11,8 @@ class DialogActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_layout)
 
-        Log.d(tag, "onCreate")
+        val value = intent?.getStringExtra("dialog")
+        Log.d(tag, "onCreate with value: $value")
     }
 
     override fun onStart() {
@@ -41,5 +43,15 @@ class DialogActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(tag, "onDestroy")
+    }
+
+    // 监听返回按钮点击
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Log.d(tag, "onBackPressed")
+        val intent = Intent()
+        intent.putExtra("data_return", "Hello FirstActivity")
+        setResult(RESULT_OK, intent)
+        //finish()
     }
 }

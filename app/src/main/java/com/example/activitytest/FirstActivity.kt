@@ -23,14 +23,19 @@ class FirstActivity : BaseActivity() {
 
         val startNormalActivity :Button = findViewById(R.id.startNormalActivity)
         startNormalActivity.setOnClickListener{
-            val intent = Intent(this, NormalActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, NormalActivity::class.java)
+//            // 正向传值
+//            intent.putExtra("int_data", 1)
+//            startActivity(intent)
+//            NormalActivity.sendMessage(this)
+            NormalActivity.sendMessage(this, 1)
         }
 
         val startDialogActivity :Button = findViewById(R.id.startDialogActivity)
         startDialogActivity.setOnClickListener{
             val intent = Intent(this, DialogActivity::class.java)
-            startActivity(intent)
+            intent.putExtra("dialog", "进入 Dialog Activity")
+            startActivityForResult(intent, 1)
         }
         // 数据恢复被回收的数据
         if (savedInstanceState != null) {
@@ -54,6 +59,21 @@ class FirstActivity : BaseActivity() {
         super.onStart()
         // 类似viewWillAppear
         Log.d(tag, "onStart")
+    }
+    /**
+     * requestCode 为从请求的活动返回的它所接收到的请求码
+     * resultCode 为结果代码，常量RESULT_CANCELED表示用户取消了操作，RESULT_OK用户正确完成了操作
+     * data 请求活动返回Intent对象，从中可获取返回的数据
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d(tag, "第二个Activity返回数据是 requestCode: $requestCode, resultCode: $resultCode")
+        when(requestCode){
+            1 ->  if( resultCode == RESULT_OK) {
+                val  returnData = data?.getStringExtra("data_return")
+                Log.d(tag, "第二个Activity返回数据是:$returnData")
+            }
+        }
     }
 
     override fun onResume() {

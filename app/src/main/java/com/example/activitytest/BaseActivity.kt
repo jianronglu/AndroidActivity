@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("BaseActivity", javaClass.simpleName)
+        Log.d("BaseActivity enter: ", javaClass.simpleName)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //ActivityCollector.removeActivity(this)
+        Log.d("BaseActivity destroy: ", javaClass.simpleName)
     }
 }
