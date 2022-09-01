@@ -1,15 +1,39 @@
 package com.example.activitytest
-
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 
 class NormalActivity : BaseActivity() {
-    private val tag = "NormalActivity"
+    // 传值的静态方法
+    companion object {
+        private val tag = "NormalActivity" //伴生类不能访问外面变量
+        private lateinit var number:Number
+
+        fun sendMessage(context: Context) {
+            val intent = Intent(context, NormalActivity::class.java)
+            context.startActivity(intent)
+            Log.d(tag,"伴生类=>sendMessage")
+        }
+
+        fun sendMessage(context: Context, number:Number)  {
+            val intent = Intent(context, NormalActivity::class.java)
+            context.startActivity(intent)
+            this.number = number
+            Log.d(tag,"伴生类=>sendMessage ${number}")
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.normal_layout)
         Log.d(tag, "onCreate")
+
+          //bundle 传值
+//        val bundle = intent.extras
+//        val res = bundle?.getInt("int_data")
+//        Log.d(tag,"接受传值 res=$res")
+        Log.d(tag,"接受传值 number=$this.number")
     }
 
     override fun onStart() {
@@ -41,5 +65,4 @@ class NormalActivity : BaseActivity() {
         super.onDestroy()
         Log.d(tag, "onDestroy")
     }
-
 }

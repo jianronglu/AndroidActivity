@@ -42,4 +42,10 @@ class DialogActivity : BaseActivity() {
         super.onDestroy()
         Log.d(tag, "onDestroy")
     }
+
+    // 监听返回按钮点击
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Log.d(tag, "onBackPressed")
+    }
 }
